@@ -1,0 +1,243 @@
+
+\documentclass[12pt,twoside,a4paper]{memoir}
+
+%load packages
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[font=scriptsize]{subfig}
+\usepackage{graphicx}
+\usepackage{subfloat}
+\usepackage{indentfirst}
+\usepackage{lipsum}
+\usepackage{courier}
+\usepackage{listings}
+\usepackage{verbatim}
+\usepackage{chngcntr}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{float}
+\setcounter{tocdepth}{2} 
+
+%frequently used phrases
+
+
+%set the user variables		
+\def \authors 	{Krzysztof Joachimiak}	%separate with '\\' if more than one
+\def \title 		{Predict Future Sales - Kaggle competition}
+\def \subtitle		{Recruitment task for Research Engineer position}	%leave empty if not necessary
+\def \revision	{1.0}
+\def \company {}
+\def \authemail	{joachimiak.krzysztof@gmail.com}
+\def \output {../output}
+
+
+
+
+%make page style
+\nouppercaseheads
+\makepagestyle{mystyle}
+\makeevenhead{mystyle}{\thepage}{}{\itshape \title}
+\makeoddhead{mystyle}{\itshape \title}{}{\thepage}
+\pagestyle{mystyle}
+
+%customize margins
+\setlrmarginsandblock{1.5cm}{1.5cm}{*}
+\setulmarginsandblock{2.0cm}{2.0cm}{*}
+\checkandfixthelayout
+
+%customize items' numbering
+\renewcommand*\thesection{\arabic{section}}
+\renewcommand*\thefigure{\arabic{section}.\arabic{figure}}
+\renewcommand*\thetable{\arabic{section}.\arabic{table}}
+\renewcommand*\theequation{\arabic{section}.\arabic{equation}}
+%this can't be done this way for listings...
+
+%customize captions
+\captionsetup[figure]{labelfont=bf,textfont=normalfont, font=small, justification=centering}
+%\captionsetup[figure]{labelfont=bf,textfont=normalfont, justification=centering, margin=0.1\textwidth}
+
+
+%own definition of theory
+\newcounter{theory}
+\setcounter{theory}{0}
+\renewcommand\thetheory{\arabic{section}.\arabic{theory}}
+
+\newenvironment{theory}[1][]{
+\refstepcounter{theory}\par\medskip\indent%
+\textbf{Teza~\thetheory. } \rmfamily
+}{\medskip}
+
+%customize tables naming
+\addto\captionspolish{\renewcommand{\tablename}{Tabela}}
+
+%results table
+
+%set subsection and subsubsection numbering
+\setcounter{secnumdepth}{3}\usepackage{color}
+
+%customize label for itemizing
+\def\labelitemi{--}
+ 
+%customize code listings
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82} 
+\lstset{
+	language=C,				% the language of the code
+	basicstyle=\footnotesize,		% the size of the fonts that are used for the code
+	numbers=left,				% where to put the line-numbers
+	numberstyle=\tiny\color{gray},	% the style that is used for the line-numbers
+	stepnumber=1,			% the step between two line-numbers. If it's 1, each line will be numbered
+	numbersep=10pt,			% how far the line-numbers are from the code
+	backgroundcolor=\color{white},	% choose the background color. You must add \usepackage{color}
+	showspaces=false,			% show spaces adding particular underscores
+	showstringspaces=false,		% underline spaces within strings
+	showtabs=false,			% show tabs within strings adding particular underscores
+	frame=none,				% adds a frame around the code
+	rulecolor=\color{black},		% if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	tabsize=5,				% sets default tabsize to 2 spaces
+	captionpos=b,				% sets the caption-position to bottom
+	breaklines=true,			% sets automatic line breaking
+	breakatwhitespace=false,		% sets if automatic breaks should only happen at whitespace
+	title=\lstname,				% show the filename of files included with \lstinputlisting; also try caption instead of title
+	keywordstyle=\color{blue},		% keyword style
+	commentstyle=\color{dkgreen},	% comment style
+	stringstyle=\color{mauve},		% string literal style
+	escapeinside={\%*}{*)},		% if you want to add LaTeX within your code
+	morekeywords={*,...},		% if you want to add more keywords to the set
+	deletekeywords={...}			% if you want to delete keywords from the given language
+}
+
+%customize font of verbatim
+\makeatletter
+\g@addto@macro\@verbatim\small
+\makeatother
+
+%settings for fbox, which is useful for images surrounding if necessary (\fbox{\includegraphics...})
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{1.2pt}
+
+%customize hyperlinks
+\hypersetup{
+	bookmarks=true,		% show bookmarks bar?
+	unicode=false,		% non-Latin characters in Acrobat’s bookmarks
+	pdftoolbar=true,		% show Acrobat’s toolbar?
+	pdfmenubar=true,		% show Acrobat’s menu?
+	pdffitwindow=false,		% window fit to page when opened
+	pdfstartview={FitH},		% fits the width of the page to the window
+	pdftitle={\title},		% title
+	pdfauthor={\authors},	% author
+	pdfsubject={\title},		% subject of the document
+	pdfcreator={pdfLaTeX},	% creator of the document
+	pdfproducer={\company},	% producer of the document
+	pdfkeywords={}{}{},		% list of keywords
+	pdfnewwindow=true,		% links in new window
+	colorlinks=true,		% false: boxed links; true: colored links
+	linkcolor=black,		% color of internal links (change box color with linkbordercolor)
+	citecolor=green,		% color of links to bibliography
+	filecolor=magenta,		% color of file links
+	urlcolor=cyan			% color of external links
+}
+
+% bibliography
+\usepackage{subfiles}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{ref.bib}
+
+%tables
+\usepackage{booktabs} % For \toprule, \midrule and \bottomrule
+\usepackage{siunitx} % Formats the units and values
+\usepackage{pgfplotstable} % Generates table from .csv
+\usepackage{pdflscape}
+
+\newcommand{\results}[3]{
+\begin{landscape}
+\begin{table}[h!]
+  \begin{center}
+    \caption{#2}
+
+    \label{#3}
+    \pgfplotstabletypeset[
+      multicolumn names, % allows to have multicolumn names
+      col sep=semicolon, % the seperator in our .csv file
+     string type,
+     every head row/.style={
+		before row={\toprule},
+		after row={\toprule},
+		every last row/.style={after row=\bottomrule},
+}
+]{#1} % filename/path to file
+  \end{center}
+\end{table}
+\end{landscape}
+}%				START THE DOCUMENT
+%
+\begin{document}
+	\thispagestyle{empty}
+
+	%set date, authors
+	\begin{flushright}
+		\today \\
+		\authors \\
+		\authemail \\
+		\href{https://github.com/krzjoa/kaggle-sales}{github.com/krzjoa/kaggle-sales} \\
+		%rev. \revision \\
+		
+	\end{flushright}
+
+
+\hspace{0pt}
+\vfill
+	%set fancy logo :-)
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[scale=1.]{img/pearson.png}
+	\end{figure}
+
+	%set the title
+	\begin{center}
+	\vspace{10pt}
+	\huge{\textbf{ \title \\ }}
+	\vspace{10pt}
+	\Large{\textbf{ \subtitle \\ }}
+	\vspace{20pt}
+	\end{center}
+\vfill
+\hspace{0pt}
+	
+\newpage
+\tableofcontents
+
+	
+\newpage
+\section{Task}
+The goal of this task is to predict future sales value. This task is a \href{https://www.kaggle.com/c/competitive-data-science-predict-future-sales}{Kaggle competition}.
+
+\section{Data Analysis}
+
+\subsection{Insights}
+There occur 
+
+\subsection{Trends in Time Series}
+
+At the very beginning, let's check, how many recordings per each month in the measured period we have. As we can see in the figure \ref{fig:nRecords}, the number of sale records depends on time and we are not sure if it's just a \textbf{lack of data} or it really shows us some \textbf{meaningful temporal relation}.
+
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[scale=.4]{\output/n_items_time.png}
+		\caption{Fig}
+	\label{fig:nRecords}
+	\end{figure}
+
+
+
+
+
+
+\printbibliography
+\end{document}
+
+%[EOF]\grid
