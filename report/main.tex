@@ -217,24 +217,34 @@ The goal of this task is to predict future sales value. This task is a \href{htt
 
 \section{Data Analysis}
 
-\subsection{Insights}
-There occur 
+\subsection{General information}
+There are  \textbf{22170} divided into \textbf{84 categories}. In the dataset, there occur \textbf{60 shops}. We can find \textbf{2'935'849 records} in the training dataset, and \textbf{214'200} in the testing one.
+\newline \\
+\textbf{Insigths:}
+\begin{itemize}
+\item There occur \textbf{negative coun values}. As many guys in the competition-related discussion say, it probably expresses the number of returned and refunded items
+\end{itemize}
 
 \subsection{Trends in Time Series}
 
 At the very beginning, let's check, how many recordings per each month in the measured period we have. As we can see in the figure \ref{fig:nRecords}, the number of sale records depends on time and we are not sure if it's just a \textbf{lack of data} or it really shows us some \textbf{meaningful temporal relation}.
 
-
 	\begin{figure}[ht]
 		\centering
-		\includegraphics[scale=.4]{\output/n_items_time.png}
-		\caption{Fig}
+		\includegraphics[scale=.4]{\output/n_records_time.png}
+		\caption{Number of records per month in the training dataset}
 	\label{fig:nRecords}
 	\end{figure}
 
+If we sum values of sales in the each month, we can get following plot (figure \ref{fig:salesValues}).
 
-
-
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[scale=.4]{\output/sales_time.png}
+		\caption{Sales values per month in the training dataset}
+	\label{fig:salesValues}
+	\end{figure}
+Seeing only this picture, we cannot state if there exists a clear link between time and summed sales values in each month. Bearing in mind the previous plot (fig. \ref{fig:nRecords}), we can apply some kind of normalization and check, how does the temporal relation between sales and number of records looks like. It is presented in the figure 
 
 
 \printbibliography
