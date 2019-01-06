@@ -223,6 +223,7 @@ There are  \textbf{22170} divided into \textbf{84 categories}. In the dataset, t
 \textbf{Insigths:}
 \begin{itemize}
 \item There occur \textbf{negative coun values}. As many guys in the competition-related discussion say, it probably expresses the number of returned and refunded items
+\item There are no timestamps in the testing dataset
 \end{itemize}
 
 \subsection{Trends in Time Series}
@@ -257,13 +258,107 @@ Seeing only this picture, we cannot state if there exists a clear link between t
  Bearing in mind the previous plot (fig. \ref{fig:nRecords}), we can apply some kind of normalization and check, how does the temporal relation between sales and number of records looks like. It is presented in the figure \ref{fig:salesRecordsValues}.
  It suggest, that some increasing trend may exist.
 
-Analyzing sales changes in some specific seasons is useless because we are not given such information in the our testing dataset.
+Lastly, it's worth to check, if some periodicity occurs in the given dataset. There are no timestamps
 
 \subsection{Shops}
 
+\subsection{Categories}
+
+
+\section{Features}
+\subsection{features\_v1}
+This is a simpliefied feature subset, constrained only to plain use of \textit{shop\_id} and \textit{item\_id} as categorical features.
+
+\subsection{features\_v2} \label{featv2}
+Using code in \textit{Feature engineering - features\_v2} notebook, new features were added to each record to both \textit{sales\_train\_v2.csv} and \textit{test.csv} files.
+Full set of features is as follows:
+\begin{itemize}
+\item shop\_id
+\item item\_id
+\item total\_cat\_cnt - total number of items sold in the category
+\item min\_cat\_cnt
+\item max\_cat\_cnt
+\item mean\_cat\_cnt
+\item std\_cat\_price
+\item min\_cat\_price
+\item max\_cat\_price
+\item mean\_cat\_price
+\item std\_cat\_price
+\item total\_shop\_cnt
+\item min\_shop\_cnt
+\item max\_shop\_cnt
+\item mean\_shop\_cnt
+\item std\_shop\_price
+\item min\_shop\_price
+\item max\_shop\_price
+\item mean\_shop\_price
+\item std\_shop\_price
+\end{itemize}
+
+\subsection{features\_v3} \label{featv3}
+
+\section{Score}
+In order to measure efficiency of the given algorithm, I used the same measure, which is used in the Kaggle leaderboard, i.e. \textbf{root mean square error}. This metric is commonly used in regression tasks. 
 
 
 \section{Experiments}
+
+\subsection{Baseline}
+Here, I will present a simple baseline solution, which will be used as a reference for the further trials. Because of the presence of catergorical features, I used one of Gradient Boosting implementation, i.e. CatBoost by Yandex. I left all hyperparameters set by default. Baselin model code can be found in the \textbf{CatBoost - baseline.ipynb} file.
+
+\paragraph{Dataset}
+This a very simplified experiment, so here I drop temporal order of the records and divide trainig dataset into two subsets:
+\begin{itemize}
+\item training - 80\% of records
+\item testing - 20\% of records
+
+Feature vectors contains only a simple information about shop id and item id. It potentialy may cause problems because of change
+
+\end{itemize}
+
+\paragraph{Results}
+Mean root mean square error after 25 trials is about 2.54.
+
+\paragraph{Kaggle score}
+Afer training on whole dataset, baseline solution gained \textbf{1.43427} on Kaggle leaderboard (place: 1692/2055). 
+
+\subsection{Nonlinear regression on feature\_v2}
+Next step is a simple neural network, which facilitates us to train a nonlinear regression model. 
+
+\paragraph{Dataset}
+In this case, model efficiency was checked using well-known \textbf{cross-validation procedure}. A \textbf{five-fold split} was generated and saved as a json file. Sample indices in the dataset were randomly shuffled, so we still don't make any use of temperal relation between records. Feature set - see subsection \ref{featv2}
+
+\paragraph{Model}
+
+\paragraph{Results}
+
+
+\subsection{Extended nonlinear regression on feature\_v2}
+Next step is a simple neural network, which facilitates us to train a nonlinear regression model. 
+
+\paragraph{Dataset}
+In this case, model efficiency was checked using well-known \textbf{cross-validation procedure}. A \textbf{five-fold split} was generated and saved as a json file. Sample indices in the dataset were randomly shuffled, so we still don't make any use of temperal relation between records. Feature set - see subsection \ref{featv2}
+
+\paragraph{Model}
+
+\paragraph{Results}
+
+
+\subsection{Bayesian nonlinear regression on feature\_v2}
+Next step is a simple neural network, which facilitates us to train a nonlinear regression model. 
+
+\paragraph{Dataset}
+In this case, model efficiency was checked using well-known \textbf{cross-validation procedure}. A \textbf{five-fold split} was generated and saved as a json file. Sample indices in the dataset were randomly shuffled, so we still don't make any use of temperal relation between records. Feature set - see subsection \ref{featv2}
+
+\paragraph{Model}
+
+\paragraph{Results}
+
+
+
+
+
+
 
 \printbibliography
 \end{document}
